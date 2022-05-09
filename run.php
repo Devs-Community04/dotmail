@@ -1,0 +1,32 @@
+<?php
+function save($filename, $email)
+{
+    $save = fopen($filename, "a");
+    fputs($save, "$email\r\n");
+    fclose($save);
+}
+    function dot($str){
+        if ((strlen($str) > 1) && (strlen($str) < 31)) {
+            $ca = preg_split("//",$str);
+            array_shift($ca);
+            array_pop($ca);
+            $head = array_shift($ca);
+            $res = dot(join('',$ca));
+            $result = array();
+            foreach($res as $val){
+                $result[] = $head . $val;
+                $result[] = $head . '.' .$val;
+            }
+            return $result;
+        }
+        return array($str);
+    }
+
+$res = dot(readline("Email Username (without @gmail.com): "));
+$sav = readline("Save file name (without - .txt): ");
+foreach($res as $val){
+    save($sav.".txt", $val."@gmail.com");
+    echo $val."@gmail.com"."\n";
+}
+echo "Mail Create Successfully !"
+?>
